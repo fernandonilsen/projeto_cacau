@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <radialGradient id="bgBox" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDF7F0"/>
+      <stop offset="100%" stop-color="#EEDECF"/>
+    </radialGradient>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#412415"/>
+      <stop offset="50%" stop-color="#2D160B"/>
+      <stop offset="100%" stop-color="#1B0C05"/>
+    </linearGradient>
+    <linearGradient id="goldRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7DF94"/>
+      <stop offset="40%" stop-color="#D9A84E"/>
+      <stop offset="100%" stop-color="#9C6B24"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="url(#bgBox)"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="245" rx="140" ry="24" fill="rgba(42,24,16,0.25)"/>
+
+  <!-- Gift Box Body -->
+  <g transform="translate(85, 110)">
+    <!-- Base Box (perspective trapezoid) -->
+    <path d="M25,50 L205,50 L195,130 L35,130 Z" fill="url(#boxGrad)" stroke="#170A04" stroke-width="2"/>
+    <!-- Box Lid -->
+    <path d="M15,20 L215,20 L208,55 L22,55 Z" fill="#522F1B" stroke="#231006" stroke-width="2"/>
+    <path d="M16,22 L214,22 L207,35 L23,35 Z" fill="#693F26" opacity="0.6"/>
+
+    <!-- Gold Ribbon Vertical -->
+    <rect x="105" y="20" width="22" height="110" fill="url(#goldRibbon)"/>
+    <path d="M112,20 L112,130" stroke="#FFF0B8" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Gold Ribbon Horizontal Lid -->
+    <path d="M18,34 L212,34 L211,44 L19,44 Z" fill="url(#goldRibbon)"/>
+
+    <!-- Ribbon Bow on Top -->
+    <!-- Left Loop -->
+    <path d="M115,20 C85,2 75,-20 100,-22 C115,-23 118,5 116,20 Z" fill="url(#goldRibbon)" stroke="#8C5C1D" stroke-width="1"/>
+    <!-- Right Loop -->
+    <path d="M117,20 C147,2 157,-20 132,-22 C117,-23 114,5 116,20 Z" fill="url(#goldRibbon)" stroke="#8C5C1D" stroke-width="1"/>
+    <!-- Knot Center -->
+    <circle cx="116" cy="18" r="9" fill="url(#goldRibbon)" stroke="#7A4E16" stroke-width="1.5"/>
+    <ellipse cx="115" cy="16" rx="4" ry="2" fill="#FFF5D6"/>
+  </g>
+
+  <!-- Tag / Selo Cacau Del Show -->
+  <g transform="translate(195, 175) rotate(10)">
+    <rect width="60" height="35" rx="5" fill="#FAF4EB" stroke="#C4823F" stroke-width="1.5"/>
+    <text x="30" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#2A1810" text-anchor="middle">CACAU</text>
+    <text x="30" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="6" font-weight="600" fill="#C4823F" text-anchor="middle">DEGUSTAÇÃO</text>
+  </g>
+</svg>
+

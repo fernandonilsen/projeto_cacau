@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 85" width="340" height="85">
+  <defs>
+    <linearGradient id="cacaoGradRevenda" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4823F"/>
+      <stop offset="100%" stop-color="#7B3F1B"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5B56A"/>
+      <stop offset="100%" stop-color="#9E6822"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: Cocoa Pod with Star/Shield Tag -->
+  <g transform="translate(12, 10)">
+    <path d="M32 10 C46 16, 54 32, 48 48 C42 62, 28 66, 18 60 C8 54, 4 40, 10 24 C16 10, 26 6, 32 10 Z" fill="url(#cacaoGradRevenda)" stroke="#4A2612" stroke-width="2"/>
+    <path d="M22 14 C28 26, 30 44, 20 56" stroke="#381B0B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M34 16 C38 30, 36 46, 30 54" stroke="#FFE2BA" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <!-- Small Leaf -->
+    <path d="M32 10 C36 4, 46 2, 52 4 C50 10, 44 14, 38 12 Z" fill="#6A8C4A"/>
+  </g>
+  <!-- Brand Text -->
+  <text x="76" y="38" font-family="'Playfair Display', Georgia, serif" font-size="27" font-weight="700" fill="#24140B" letter-spacing="0.5">Cacau Del Show</text>
+  <!-- Revenda Badge Text -->
+  <rect x="76" y="47" width="220" height="19" rx="4" fill="#3D2111"/>
+  <text x="186" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#E5B56A" letter-spacing="1.8" text-anchor="middle">REVENDA CACAU SHOW</text>
+</svg>

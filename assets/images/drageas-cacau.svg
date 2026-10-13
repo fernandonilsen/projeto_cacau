@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <radialGradient id="bgDragea" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDF7F0"/>
+      <stop offset="100%" stop-color="#EEDECF"/>
+    </radialGradient>
+    <radialGradient id="almondG" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#6B3A1F"/>
+      <stop offset="60%" stop-color="#3D1C0B"/>
+      <stop offset="100%" stop-color="#241005"/>
+    </radialGradient>
+    <linearGradient id="jarG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
+      <stop offset="30%" stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0.1)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.6)"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="url(#bgDragea)"/>
+  
+  <ellipse cx="200" cy="240" rx="120" ry="24" fill="rgba(42,24,16,0.2)"/>
+
+  <!-- Glass Bowl / Pote com Drágeas -->
+  <g transform="translate(110, 80)">
+    <!-- Back of bowl -->
+    <ellipse cx="90" cy="110" rx="80" ry="45" fill="#D6C4B2"/>
+
+    <!-- Piles of dragees -->
+    <ellipse cx="65" cy="100" rx="22" ry="15" fill="url(#almondG)" transform="rotate(-15 65 100)"/>
+    <ellipse cx="105" cy="105" rx="20" ry="14" fill="url(#almondG)" transform="rotate(25 105 105)"/>
+    <ellipse cx="85" cy="85" rx="24" ry="16" fill="url(#almondG)" transform="rotate(-5 85 85)"/>
+    <ellipse cx="120" cy="90" rx="22" ry="15" fill="url(#almondG)" transform="rotate(10 120 90)"/>
+    <ellipse cx="50" cy="88" rx="21" ry="14" fill="url(#almondG)" transform="rotate(-30 50 88)"/>
+    
+    <ellipse cx="75" cy="70" rx="23" ry="15" fill="url(#almondG)" transform="rotate(15 75 70)"/>
+    <ellipse cx="105" cy="72" rx="22" ry="14" fill="url(#almondG)" transform="rotate(-20 105 72)"/>
+    <ellipse cx="90" cy="55" rx="20" ry="14" fill="url(#almondG)"/>
+
+    <!-- Cocoa dust specks -->
+    <circle cx="85" cy="68" r="4" fill="#C4823F" opacity="0.5"/>
+    <circle cx="68" cy="95" r="3" fill="#C4823F" opacity="0.6"/>
+    <circle cx="110" cy="85" r="4" fill="#C4823F" opacity="0.5"/>
+
+    <!-- Glass Bowl Rim & Body -->
+    <path d="M10,80 Q90,165 170,80" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="4"/>
+    <path d="M10,80 C10,135 45,155 90,155 C135,155 170,135 170,80 Z" fill="url(#jarG)" stroke="#CBB4A0" stroke-width="1.5"/>
+  </g>
+
+  <!-- Loose dragees on table -->
+  <ellipse cx="95" cy="235" rx="18" ry="12" fill="url(#almondG)" transform="rotate(20 95 235)"/>
+  <ellipse cx="295" cy="230" rx="19" ry="13" fill="url(#almondG)" transform="rotate(-15 295 230)"/>
+</svg>
+

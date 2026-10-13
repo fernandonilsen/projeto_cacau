@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <radialGradient id="bgG" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDF7F0"/>
+      <stop offset="100%" stop-color="#EEDECF"/>
+    </radialGradient>
+    <radialGradient id="shadowG" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(42,24,16,0.3)"/>
+      <stop offset="100%" stop-color="rgba(42,24,16,0)"/>
+    </radialGradient>
+    <radialGradient id="truffleGrad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#553018"/>
+      <stop offset="40%" stop-color="#34180A"/>
+      <stop offset="90%" stop-color="#1A0C05"/>
+      <stop offset="100%" stop-color="#100703"/>
+    </radialGradient>
+    <radialGradient id="powderGrad" cx="40%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#8F5428"/>
+      <stop offset="100%" stop-color="#4E2B12"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="url(#bgG)"/>
+  <!-- Plate / Base ring -->
+  <ellipse cx="200" cy="235" rx="140" ry="42" fill="#E4D1BF" stroke="#D1B8A0" stroke-width="2"/>
+  <ellipse cx="200" cy="232" rx="120" ry="32" fill="#F8F0E5"/>
+  <ellipse cx="200" cy="225" rx="85" ry="18" fill="url(#shadowG)"/>
+  
+  <!-- Truffle 1 Main -->
+  <g transform="translate(145, 95)">
+    <!-- Main truffle body -->
+    <path d="M55,10 C85,8 108,32 108,65 C108,98 88,118 55,118 C20,118 2,95 2,65 C2,30 25,12 55,10 Z" fill="url(#truffleGrad)"/>
+    <!-- Cocoa powder dusting texture -->
+    <path d="M48,15 C72,13 95,30 96,55 C97,75 80,95 55,95 C30,95 15,80 15,55 C15,30 30,17 48,15 Z" fill="url(#powderGrad)" opacity="0.35"/>
+    <circle cx="45" cy="35" r="8" fill="#9E6135" opacity="0.5"/>
+    <circle cx="65" cy="45" r="12" fill="#C4823F" opacity="0.25"/>
+    <circle cx="35" cy="65" r="9" fill="#874C22" opacity="0.4"/>
+    <circle cx="75" cy="72" r="7" fill="#6A3614" opacity="0.4"/>
+    <!-- Specular highlight -->
+    <path d="M42,20 C56,18 72,25 76,34 C64,28 48,27 38,32 C40,26 41,21 42,20 Z" fill="#D79E69" opacity="0.3"/>
+  </g>
+
+  <!-- Small second truffle in front right -->
+  <g transform="translate(210, 150) scale(0.68)">
+    <ellipse cx="55" cy="115" rx="50" ry="16" fill="url(#shadowG)"/>
+    <path d="M55,10 C85,8 108,32 108,65 C108,98 88,118 55,118 C20,118 2,95 2,65 C2,30 25,12 55,10 Z" fill="url(#truffleGrad)"/>
+    <circle cx="50" cy="40" r="10" fill="#9E6135" opacity="0.5"/>
+  </g>
+
+  <!-- Gold foil flake accent -->
+  <path d="M190,120 L195,115 L198,122 L192,125 Z" fill="#E6BA6E" stroke="#CA9436" stroke-width="0.5"/>
+  <path d="M225,140 L230,138 L228,144 Z" fill="#E6BA6E"/>
+</svg>
+

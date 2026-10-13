@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cacau Del Show - Revenda | Portal do Vendedor</title>
+  <meta name="description" content="Ponto de venda e controle de retiradas para vendedores da revenda Cacau Show.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="vendedor.html" class="brand-link" title="Cacau Del Show - Revenda">
+        <img src="assets/images/logo.svg" alt="Cacau Del Show - Revenda Logo">
+      </a>
+
+      <!-- Navegação Interna -->
+      <nav class="main-nav" aria-label="Navegação da equipe">
+        <a href="vendedor.html" class="nav-link active">Portal do Vendedor</a>
+        <a href="admin.html" class="nav-link">Controle de Estoque (Admin)</a>
+        <a href="index.html" class="nav-link" target="_blank">Ver Vitrine Pública ↗</a>
+      </nav>
+
+      <!-- Ações do Cabeçalho -->
+      <div class="header-actions">
+        <button id="btn-sync-vendedor" class="btn btn-outline btn-sm" title="Sincronizar com Planilha">
+          🔄 Atualizar
+        </button>
+        <button id="btn-vendedor-status" class="sheets-status-pill">
+          <span class="status-dot" id="vendedor-status-dot"></span>
+          <span id="vendedor-status-text">Conectando...</span>
+        </button>
+        <button type="button" id="btn-vendedor-logout" class="btn btn-outline btn-sm" style="color: var(--status-danger);" title="Encerrar sessão deste vendedor">
+          🚪 Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== BARRA DO PERFIL DO VENDEDOR ==================== -->
+  <section class="seller-header">
+    <div class="container">
+      <div class="seller-profile-bar">
+        <div>
+          <div style="display: inline-block; background: rgba(229, 181, 106, 0.25); color: #F7D070; font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: var(--radius-pill); margin-bottom: 0.35rem; border: 1px solid rgba(229, 181, 106, 0.4);">
+            💼 ÁREA DO VENDEDOR AUTENTICADO
+          </div>
+          <h2 style="color: #FFF; font-size: 1.45rem; margin-bottom: 0.2rem;" id="vendedor-nome-display">Carregando perfil...</h2>
+          <p style="color: #DFC8B3; font-size: 0.85rem;">Revenda Cacau Show - Lançamento rápido de vendas e retiradas no celular.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.82rem; color: #EBDCCB;">Sessão Ativa</span>
+          <button type="button" id="btn-trocar-vendedor" class="btn btn-outline btn-sm" style="color: #FFF; border-color: rgba(255,255,255,0.3); font-size: 0.8rem;">
+            Trocar Vendedor
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumo Pessoal de Estatísticas -->
+      <div class="seller-stats-strip">
+        <div class="seller-stat-chip">
+          <span>Na Minha Sacola</span>
+          <strong id="stat-saldo-maos">0 un</strong>
+        </div>
+        <div class="seller-stat-chip">
+          <span>Total Retirado</span>
+          <strong id="stat-total-retirado">0 un</strong>
+        </div>
+        <div class="seller-stat-chip">
+          <span>Total Vendido</span>
+          <strong id="stat-total-vendido" style="color: #8CE69E;">0 un</strong>
+        </div>
+        <div class="seller-stat-chip">
+          <span>Meu Faturamento</span>
+          <strong id="stat-faturamento" style="color: #F7D070;">R$ 0,00</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABAS OPERACIONAIS DO VENDEDOR ==================== -->
+  <nav class="seller-nav-tabs" aria-label="Abas do Vendedor">
+    <button class="seller-tab-btn active" data-vtab="vtab-sacola">🛍️ Minha Sacola</button>
+    <button class="seller-tab-btn" data-vtab="vtab-retirar">📦 Pegar do Estoque</button>
+    <button class="seller-tab-btn" data-vtab="vtab-venda">⚡ Lançar Venda</button>
+    <button class="seller-tab-btn" data-vtab="vtab-historico">📜 Meu Histórico</button>
+  </nav>
+
+  <main class="container" style="padding-bottom: 4rem;">
+
+    <!-- ==================== ABA 1: MINHA SACOLA (ESTOQUE EM MÃOS) ==================== -->
+    <section class="seller-section active" id="vtab-sacola">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h3 style="color: var(--cacao-dark);">Chocolates em Minha Posse</h3>
+          <p style="font-size: 0.85rem;">Itens da Cacau Show que você retirou do estoque geral para vender.</p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-atalho-pegar-estoque">
+          + Retirar Mais Itens
+        </button>
+      </div>
+
+      <div id="lista-sacola-vendedor">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== ABA 2: RETIRAR DO ESTOQUE GERAL ==================== -->
+    <section class="seller-section" id="vtab-retirar" style="display: none;">
+      <div style="margin-bottom: 1.25rem;">
+        <h3 style="color: var(--cacao-dark);">Retirar Produtos do Depósito/Loja</h3>
+        <p style="font-size: 0.88rem;">Selecione os chocolates e as quantidades que você vai levar para vender. O estoque base será debitado automaticamente.</p>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="search-box" style="max-width: 320px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="vendedor-search-estoque" placeholder="Buscar produto Cacau Show no estoque...">
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Estoque geral da revenda
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">Foto</th>
+                <th>Produto Cacau Show</th>
+                <th>Preço</th>
+                <th style="text-align: center;">Disponível na Loja</th>
+                <th style="text-align: center;">Quantidade a Retirar</th>
+                <th style="text-align: center;">Ação</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-retirada-estoque">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABA 3: LANÇAR VENDA RÁPIDA ==================== -->
+    <section class="seller-section" id="vtab-venda" style="display: none;">
+      <div style="max-width: 600px; margin: 0 auto;">
+        <div class="table-card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 0.5rem; color: var(--cacao-dark);">Registrar Venda Realizada</h3>
+          <p style="font-size: 0.88rem; margin-bottom: 1.25rem;">Lance a venda de um item da sua sacola para o cliente. O total é calculado na hora.</p>
+
+          <form id="form-venda-rapida">
+            <div class="form-group">
+              <label for="venda-select-produto">Chocolate Vendido *</label>
+              <select id="venda-select-produto" class="form-control" required>
+                <!-- Preenchido via JS com itens que o vendedor tem em mãos -->
+              </select>
+              <small id="venda-saldo-aviso" style="display: block; margin-top: 0.3rem; color: var(--caramel-gold); font-weight: 600;"></small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="venda-input-qtd">Quantidade Vendida *</label>
+                <input type="number" id="venda-input-qtd" class="form-control" value="1" min="1" required>
+              </div>
+
+              <div class="form-group">
+                <label for="venda-input-unitario">Valor Unitário (R$) *</label>
+                <input type="number" id="venda-input-unitario" class="form-control" step="0.01" min="0" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="venda-select-pgto">Forma de Pagamento *</label>
+              <select id="venda-select-pgto" class="form-control" required>
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de Débito">Cartão de Débito</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
+            <!-- Resumo do Total -->
+            <div style="background: var(--surface-muted); padding: 1rem; border-radius: var(--radius-sm); margin: 1.25rem 0; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-weight: 600; color: var(--text-secondary);">Total da Venda:</span>
+              <strong style="font-size: 1.4rem; color: var(--status-success);" id="venda-total-calculado">R$ 0,00</strong>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg" style="width: 100%;">
+              ✓ Confirmar Venda
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABA 4: HISTÓRICO INDIVIDUAL ==================== -->
+    <section class="seller-section" id="vtab-historico" style="display: none;">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div style="font-weight: 600; color: var(--cacao-dark);">
+            Meu Histórico Pessoal de Retiradas e Vendas
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Data/Hora</th>
+                <th>Operação</th>
+                <th>Produto</th>
+                <th style="text-align: center;">Quantidade</th>
+                <th style="text-align: right;">Total R$</th>
+                <th>Detalhes</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-meu-historico">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL DE DEVOLUÇÃO AO ESTOQUE ==================== -->
+  <dialog id="modal-devolver">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Devolver Itens ao Depósito/Loja</h3>
+        <button type="button" class="dialog-close" id="modal-dev-fechar">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <p id="dev-produto-nome" style="font-weight: 700; color: var(--cacao-dark); margin-bottom: 0.5rem;"></p>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Devolva os produtos da Cacau Show que não foram vendidos de volta ao estoque base.
+        </p>
+
+        <div class="form-group">
+          <label for="dev-input-qtd">Quantidade a Devolver:</label>
+          <input type="number" id="dev-input-qtd" class="form-control" min="1" value="1">
+          <small id="dev-max-aviso" style="color: var(--text-muted);"></small>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" id="modal-dev-cancelar">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="modal-dev-confirmar">Confirmar Devolução</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/sheets-api.js"></script>
+  <script src="js/vendedor.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Restrito | Cacau Del Show - Revenda</title>
+  <meta name="description" content="Portal de acesso restrito para Administrador e Vendedores da revenda Cacau Show.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: radial-gradient(circle at top, #3A2012 0%, #1E1008 100%);
+    }
+    .login-card {
+      background: var(--surface-card);
+      width: 100%;
+      max-width: 440px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+    }
+    .login-header {
+      background: var(--surface-muted);
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .login-header img {
+      margin: 0 auto 0.75rem;
+      height: 48px;
+    }
+    .profile-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 1.25rem 1.5rem 0.5rem;
+      background: var(--surface-muted);
+      padding: 0.35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+    }
+    .profile-tab {
+      padding: 0.6rem 0.75rem;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-pill);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .profile-tab.active {
+      background: var(--cacao-dark);
+      color: #FFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .login-body {
+      padding: 1.5rem;
+    }
+    .password-input-group {
+      position: relative;
+    }
+    .password-input-group input {
+      padding-right: 2.8rem;
+    }
+    .btn-toggle-eye {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.2rem;
+    }
+    .login-hint {
+      background: var(--caramel-bg);
+      border: 1px solid var(--caramel-soft);
+      color: var(--cacao-dark);
+      font-size: 0.78rem;
+      padding: 0.6rem 0.85rem;
+      border-radius: var(--radius-sm);
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <a href="index.html">
+          <img src="assets/images/logo.svg" alt="Cacau Del Show Logo">
+        </a>
+        <h3 style="color: var(--cacao-dark); font-size: 1.25rem;">Acesso Restrito ao Sistema</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Área protegida para controle de estoque e vendedores
+        </p>
+      </div>
+
+      <!-- Alternador de Perfil -->
+      <div class="profile-switcher">
+        <button type="button" class="profile-tab active" id="tab-admin" data-role="admin">
+          🛡️ Administrador
+        </button>
+        <button type="button" class="profile-tab" id="tab-vendedor" data-role="vendedor">
+          💼 Vendedor
+        </button>
+      </div>
+
+      <div class="login-body">
+        <!-- FORMULÁRIO DO ADMINISTRADOR -->
+        <form id="form-login-admin">
+          <div class="form-group">
+            <label for="admin-senha">Senha do Administrador:</label>
+            <div class="password-input-group">
+              <input type="password" id="admin-senha" class="form-control" required placeholder="Digite a senha admin" autocomplete="current-password">
+              <button type="button" class="btn-toggle-eye" data-target="admin-senha" title="Mostrar senha">👁️</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" id="btn-submit-admin">
+            Entrar como Administrador
+          </button>
+
+          <div class="login-hint">
+            <span>🔑</span>
+            <span>Senha padrão inicial: <strong>admin123</strong> (pode ser alterada via painel/planilha).</span>
+          </div>
+        </form>
+
+        <!-- FORMULÁRIO DO VENDEDOR -->
+        <form id="form-login-vendedor" style="display: none;">
+          <div class="form-group">
+            <label for="vendedor-select-login">Identificação do Vendedor:</label>
+            <select id="vendedor-select-login" class="form-control" required>
+              <option value="">Carregando vendedores...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="vendedor-senha">Senha / PIN do Vendedor:</label>
+            <div class="password-input-group">
+              <input type="password" id="vendedor-senha" class="form-control" required placeholder="Digite sua senha" autocomplete="current-password">
+              <button type="button" class="btn-toggle-eye" data-target="vendedor-senha" title="Mostrar senha">👁️</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" id="btn-submit-vendedor">
+            Acessar Meu Painel de Vendas
+          </button>
+
+          <div class="login-hint">
+            <span>💡</span>
+            <span>Senha padrão inicial dos vendedores: <strong>1234</strong>.</span>
+          </div>
+        </form>
+
+        <!-- Feedback de Erro -->
+        <div id="login-error-msg" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: var(--radius-sm); background: var(--status-danger-bg); color: var(--status-danger); font-size: 0.85rem; text-align: center; border: 1px solid rgba(150, 47, 36, 0.2);">
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-light);">
+          <a href="index.html" style="font-size: 0.85rem; color: var(--caramel-gold); font-weight: 600; text-decoration: none;">
+            ← Voltar para a Vitrine de Chocolates
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/sheets-api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      let roleAtivo = 'admin';
+      let todosVendedores = [];
+
+      const tabAdmin = document.getElementById('tab-admin');
+      const tabVendedor = document.getElementById('tab-vendedor');
+      const formAdmin = document.getElementById('form-login-admin');
+      const formVendedor = document.getElementById('form-login-vendedor');
+      const selectVendedor = document.getElementById('vendedor-select-login');
+      const inputAdminSenha = document.getElementById('admin-senha');
+      const inputVendedorSenha = document.getElementById('vendedor-senha');
+      const errorMsg = document.getElementById('login-error-msg');
+      const btnSubmitAdmin = document.getElementById('btn-submit-admin');
+      const btnSubmitVendedor = document.getElementById('btn-submit-vendedor');
+
+      // Alternar abas de perfil
+      function alternarPerfil(role) {
+        roleAtivo = role;
+        errorMsg.style.display = 'none';
+
+        if (role === 'admin') {
+          tabAdmin.classList.add('active');
+          tabVendedor.classList.remove('active');
+          formAdmin.style.display = 'block';
+          formVendedor.style.display = 'none';
+          inputAdminSenha.focus();
+        } else {
+          tabAdmin.classList.remove('active');
+          tabVendedor.classList.add('active');
+          formAdmin.style.display = 'none';
+          formVendedor.style.display = 'block';
+          inputVendedorSenha.focus();
+        }
+      }
+
+      tabAdmin.addEventListener('click', () => alternarPerfil('admin'));
+      tabVendedor.addEventListener('click', () => alternarPerfil('vendedor'));
+
+      // Olho para mostrar/ocultar senha
+      document.querySelectorAll('.btn-toggle-eye').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetId = e.currentTarget.dataset.target;
+          const input = document.getElementById(targetId);
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🔒';
+          } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+          }
+        });
+      });
+
+      // Carregar lista de vendedores
+      try {
+        const data = await sheetsDB.getAllData();
+        todosVendedores = (data.vendedores || []).filter(v => v.ativo !== false);
+        if (todosVendedores.length === 0) {
+          selectVendedor.innerHTML = '<option value="">Nenhum vendedor cadastrado</option>';
+        } else {
+          selectVendedor.innerHTML = todosVendedores.map(v => `
+            <option value="${v.id}">${v.nome}</option>
+          `).join('');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Login Administrador
+      formAdmin.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+        btnSubmitAdmin.disabled = true;
+        btnSubmitAdmin.textContent = 'Verificando senha...';
+
+        const senha = inputAdminSenha.value.trim();
+        const res = await sheetsDB.autenticar('admin', 'ADMIN', senha);
+
+        if (res.success) {
+          showToast('Acesso concedido! Redirecionando...', 'success');
+          setTimeout(() => {
+            window.location.href = 'admin.html';
+          }, 400);
+        } else {
+          errorMsg.textContent = res.message || 'Senha de administrador incorreta.';
+          errorMsg.style.display = 'block';
+          btnSubmitAdmin.disabled = false;
+          btnSubmitAdmin.textContent = 'Entrar como Administrador';
+        }
+      });
+
+      // Login Vendedor
+      formVendedor.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+        btnSubmitVendedor.disabled = true;
+        btnSubmitVendedor.textContent = 'Verificando senha...';
+
+        const vendId = selectVendedor.value;
+        const senha = inputVendedorSenha.value.trim();
+
+        if (!vendId) {
+          errorMsg.textContent = 'Selecione um vendedor.';
+          errorMsg.style.display = 'block';
+          btnSubmitVendedor.disabled = false;
+          btnSubmitVendedor.textContent = 'Acessar Meu Painel de Vendas';
+          return;
+        }
+
+        const res = await sheetsDB.autenticar('vendedor', vendId, senha);
+
+        if (res.success) {
+          localStorage.setItem('cacaudelshow_current_vendor', vendId);
+          showToast(`Olá, ${res.usuario.nome}! Redirecionando...`, 'success');
+          setTimeout(() => {
+            window.location.href = 'vendedor.html';
+          }, 400);
+        } else {
+          errorMsg.textContent = res.message || 'Senha incorreta para este vendedor.';
+          errorMsg.style.display = 'block';
+          btnSubmitVendedor.disabled = false;
+          btnSubmitVendedor.textContent = 'Acessar Meu Painel de Vendas';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

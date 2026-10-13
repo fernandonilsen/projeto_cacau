@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cacau Del Show - Revenda | Painel Administrativo</title>
+  <meta name="description" content="Painel de controle de estoque base e vendedores da revenda Cacau Show.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+
+  <!-- ==================== HEADER ADMIN ==================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="admin.html" class="brand-link" title="Cacau Del Show - Revenda">
+        <img src="assets/images/logo.svg" alt="Cacau Del Show - Revenda Logo">
+      </a>
+
+      <!-- Navegação Interna da Equipe -->
+      <nav class="main-nav" aria-label="Navegação da equipe">
+        <a href="admin.html" class="nav-link active">Controle de Estoque (Admin)</a>
+        <a href="vendedor.html" class="nav-link">Portal do Vendedor</a>
+        <a href="index.html" class="nav-link" target="_blank">Ver Vitrine Pública ↗</a>
+      </nav>
+
+      <!-- Ações do Cabeçalho -->
+      <div class="header-actions">
+        <button id="btn-sync-sheets" class="btn btn-outline btn-sm" title="Sincronizar com o Google Planilhas">
+          🔄 Sincronizar
+        </button>
+        <button id="btn-admin-sheets-status" class="sheets-status-pill">
+          <span class="status-dot" id="admin-status-dot"></span>
+          <span id="admin-status-text">Conectando...</span>
+        </button>
+        <!-- Perfil e Logout -->
+        <button type="button" id="btn-admin-logout" class="btn btn-outline btn-sm" style="color: var(--status-danger);" title="Encerrar sessão de administrador">
+          🚪 Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 1.5rem; padding-bottom: 4rem;">
+    <!-- ==================== CABEÇALHO DO PAINEL ==================== -->
+    <div class="dashboard-header">
+      <div>
+        <div style="display: inline-block; background: var(--caramel-bg); color: var(--cacao-dark); font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: var(--radius-pill); margin-bottom: 0.35rem; border: 1px solid var(--caramel-soft);">
+          🛡️ ÁREA RESTRITA - PERFIL ADMINISTRADOR
+        </div>
+        <h2>Controle de Estoque Base & Revenda</h2>
+        <p>Administração central do estoque geral da revenda Cacau Show, produtos e acompanhamento de vendedores.</p>
+      </div>
+      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" id="btn-novo-produto">
+          + Novo Produto
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-novo-vendedor">
+          + Novo Vendedor
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== KPIS / MÉTRICAS PRINCIPAIS ==================== -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon">📦</div>
+        <div class="kpi-info">
+          <h4>Estoque Base (Loja/Depósito)</h4>
+          <div class="kpi-number" id="kpi-estoque-base">0</div>
+          <div class="kpi-sub">unidades disponíveis</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon">💼</div>
+        <div class="kpi-info">
+          <h4>Com Vendedores</h4>
+          <div class="kpi-number" id="kpi-com-vendedores" style="color: var(--caramel-gold);">0</div>
+          <div class="kpi-sub">unidades em circulação</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon">💰</div>
+        <div class="kpi-info">
+          <h4>Vendas Faturadas</h4>
+          <div class="kpi-number" id="kpi-faturamento-total" style="color: var(--status-success);">R$ 0,00</div>
+          <div class="kpi-sub" id="kpi-vendas-qtd">0 itens vendidos</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon">🍫</div>
+        <div class="kpi-info">
+          <h4>Produtos Ativos</h4>
+          <div class="kpi-number" id="kpi-produtos-ativos">0</div>
+          <div class="kpi-sub">visíveis no catálogo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABAS DE NAVEGAÇÃO ADMIN ==================== -->
+    <nav class="admin-tabs" aria-label="Abas Administrativas">
+      <button class="admin-tab-btn active" data-tab="tab-produtos">📦 Estoque Geral de Produtos</button>
+      <button class="admin-tab-btn" data-tab="tab-vendedores">👥 Gestão de Vendedores & Senhas</button>
+      <button class="admin-tab-btn" data-tab="tab-historico">📜 Histórico de Movimentações</button>
+      <button class="admin-tab-btn" data-tab="tab-planilha">🔗 Integração Google Planilhas & Segurança</button>
+    </nav>
+
+    <!-- ==================== ABA 1: PRODUTOS & ESTOQUE GERAL ==================== -->
+    <section class="admin-section active" id="tab-produtos">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="search-box" style="max-width: 320px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="admin-search-prod" placeholder="Filtrar por nome, linha ou categoria...">
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);" id="admin-prod-count">
+            0 produtos cadastrados
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table" id="tabela-produtos">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Foto</th>
+                <th>Nome do Produto Cacau Show</th>
+                <th>Linha / Categoria</th>
+                <th>Preço Unitário</th>
+                <th style="text-align: center;">Estoque Base</th>
+                <th style="text-align: center;">Ações Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-produtos">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABA 2: VENDEDORES & DESEMPENHO ==================== -->
+    <section class="admin-section" id="tab-vendedores">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div style="font-weight: 600; color: var(--cacao-dark);">
+            Desempenho & Controle de Senhas dos Vendedores
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btn-add-vendedor-sec">
+            + Cadastrar Novo Vendedor
+          </button>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table" id="tabela-vendedores">
+            <thead>
+              <tr>
+                <th>Vendedor</th>
+                <th>Telefone</th>
+                <th style="text-align: center;">Total Retirado</th>
+                <th style="text-align: center;">Total Vendido</th>
+                <th style="text-align: center;">Saldo em Mãos (Sacola)</th>
+                <th style="text-align: right;">Faturamento Total</th>
+                <th style="text-align: center;">Ações & Senha</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-vendedores">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Detalhes do Vendedor Selecionado -->
+      <div id="seller-drilldown-box" style="margin-top: 1.5rem; display: none;" class="table-card">
+        <div class="table-toolbar" style="background: var(--caramel-bg);">
+          <div style="font-weight: 700; color: var(--cacao-dark);" id="seller-drilldown-title">
+            Itens em Mãos com o Vendedor
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btn-fechar-drilldown">Fechar Detalhes</button>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Retirado</th>
+                <th>Vendido</th>
+                <th>Saldo Restante</th>
+                <th>Preço Estimado</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-seller-items">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABA 3: HISTÓRICO DE MOVIMENTAÇÕES ==================== -->
+    <section class="admin-section" id="tab-historico">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label style="font-size: 0.85rem; font-weight: 600;">Filtrar Tipo:</label>
+            <select id="select-filtro-historico" class="form-control" style="width: auto; padding: 0.35rem 0.75rem;">
+              <option value="todos">Todas as Movimentações</option>
+              <option value="retiradas">Apenas Retiradas de Estoque</option>
+              <option value="vendas">Apenas Vendas Realizadas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table" id="tabela-historico">
+            <thead>
+              <tr>
+                <th>Data/Hora</th>
+                <th>Tipo</th>
+                <th>Vendedor</th>
+                <th>Produto</th>
+                <th style="text-align: center;">Quantidade</th>
+                <th style="text-align: right;">Valor</th>
+                <th>Detalhes / Pgto</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-historico">
+              <!-- Renderizado via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABA 4: CONFIGURAÇÃO PLANILHA & SEGURANÇA ==================== -->
+    <section class="admin-section" id="tab-planilha">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <!-- Configuração Planilha -->
+        <div class="table-card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 0.5rem; color: var(--cacao-dark);">Conexão Google Planilhas</h3>
+          <p style="margin-bottom: 1.25rem; font-size: 0.88rem;">
+            Vincule sua planilha Google Drive para manter estoques, senhas e vendas sincronizados em tempo real.
+          </p>
+
+          <div class="form-group">
+            <label for="admin-sheets-url">URL da Web App (Apps Script):</label>
+            <input type="url" id="admin-sheets-url" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <button type="button" class="btn btn-primary btn-sm" id="btn-testar-salvar-planilha">
+              Salvar & Testar Conexão
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-desconectar-planilha">
+              Usar Modo Local
+            </button>
+          </div>
+
+          <div id="admin-sheets-feedback" style="padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem; display: none;"></div>
+
+          <a href="google-apps-script/INSTRUCOES_PLANILHA.md" target="_blank" class="btn btn-outline btn-sm" style="width: 100%;">
+            📄 Abrir Manual Passo a Passo de Instalação
+          </a>
+        </div>
+
+        <!-- Alteração de Senha do Administrador -->
+        <div class="table-card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 0.5rem; color: var(--cacao-dark);">Segurança & Senha Admin</h3>
+          <p style="margin-bottom: 1.25rem; font-size: 0.88rem;">
+            Altere a senha mestre de acesso do perfil Administrador.
+          </p>
+
+          <form id="form-alterar-senha-admin">
+            <div class="form-group">
+              <label for="input-nova-senha-admin">Nova Senha de Administrador:</label>
+              <input type="password" id="input-nova-senha-admin" class="form-control" required placeholder="Digite a nova senha">
+            </div>
+
+            <div class="form-group">
+              <label for="input-confirma-senha-admin">Confirmar Nova Senha:</label>
+              <input type="password" id="input-confirma-senha-admin" class="form-control" required placeholder="Repita a nova senha">
+            </div>
+
+            <button type="submit" class="btn btn-secondary" style="width: 100%;">
+              🔒 Atualizar Senha de Administrador
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL: CADASTRO / EDIÇÃO DE PRODUTO ==================== -->
+  <dialog id="modal-produto">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 id="modal-prod-titulo">Cadastrar Produto Cacau Show</h3>
+        <button type="button" class="dialog-close" id="modal-prod-fechar">&times;</button>
+      </div>
+      <form id="form-produto">
+        <div class="dialog-body">
+          <input type="hidden" id="prod-form-id">
+
+          <div class="form-group">
+            <label for="prod-form-nome">Nome do Produto *</label>
+            <input type="text" id="prod-form-nome" class="form-control" required placeholder="Ex: Tablete LaCreme Branco 100g">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prod-form-categoria">Linha / Categoria *</label>
+              <select id="prod-form-categoria" class="form-control" required>
+                <option value="Trufas">Trufas 30g</option>
+                <option value="LaCreme">Linha LaCreme</option>
+                <option value="Bendito Cacao">Bendito Cacao</option>
+                <option value="Presentes">Caixas & Presentes</option>
+                <option value="Montebello">Linha Montebello</option>
+                <option value="Tabletes">Tabletes Gerais</option>
+                <option value="Sazonal">Sazonal / Datas Especiais</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="prod-form-preco">Preço de Venda (R$) *</label>
+              <input type="number" id="prod-form-preco" class="form-control" required step="0.01" min="0" placeholder="0.00">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-form-estoque">Estoque Inicial na Loja/Depósito *</label>
+            <input type="number" id="prod-form-estoque" class="form-control" required min="0" placeholder="Ex: 50">
+          </div>
+
+          <div class="form-group">
+            <label for="prod-form-descricao">Descrição do Produto</label>
+            <textarea id="prod-form-descricao" class="form-control" rows="3" placeholder="Informações de sabor, gramatura, características oficiais Cacau Show..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-form-imagem">Imagem (URL ou Escolha um Modelo)</label>
+            <input type="text" id="prod-form-imagem" class="form-control" placeholder="assets/images/trufa-70.svg">
+            <div style="display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/trufa-70.svg">Trufa</button>
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/barra-avelas.svg">Tablete</button>
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/bombom-caramelo.svg">Montebello</button>
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/caixa-presente.svg">Caixa Presente</button>
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/drageas-cacau.svg">Drágeas</button>
+              <button type="button" class="btn btn-outline btn-sm btn-preset-img" data-img="assets/images/trufa-maracuja.svg">LaCreme</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-footer">
+          <button type="button" class="btn btn-outline" id="modal-prod-cancelar">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="modal-prod-salvar">Salvar Produto</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ==================== MODAL: CADASTRO DE VENDEDOR ==================== -->
+  <dialog id="modal-vendedor">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Cadastrar Novo Vendedor</h3>
+        <button type="button" class="dialog-close" id="modal-vend-fechar">&times;</button>
+      </div>
+      <form id="form-vendedor">
+        <div class="dialog-body">
+          <div class="form-group">
+            <label for="vend-form-nome">Nome do Vendedor *</label>
+            <input type="text" id="vend-form-nome" class="form-control" required placeholder="Ex: Juliana Santos">
+          </div>
+          <div class="form-group">
+            <label for="vend-form-telefone">Telefone / WhatsApp</label>
+            <input type="text" id="vend-form-telefone" class="form-control" placeholder="(11) 99999-9999">
+          </div>
+          <div class="form-group">
+            <label for="vend-form-senha">Senha / PIN de Acesso *</label>
+            <input type="text" id="vend-form-senha" class="form-control" required value="1234" placeholder="Ex: 1234">
+            <small style="color: var(--text-muted);">Esta senha será usada pelo vendedor para acessar a área restrita.</small>
+          </div>
+        </div>
+        <div class="dialog-footer">
+          <button type="button" class="btn btn-outline" id="modal-vend-cancelar">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Cadastrar Vendedor</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ==================== MODAL: ALTERAR SENHA DO VENDEDOR ==================== -->
+  <dialog id="modal-senha-vendedor">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Alterar Senha do Vendedor</h3>
+        <button type="button" class="dialog-close" id="modal-senha-vend-fechar">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <p id="senha-vend-nome" style="font-weight: 700; color: var(--cacao-dark); margin-bottom: 1rem;"></p>
+        <input type="hidden" id="senha-vend-id">
+        <div class="form-group">
+          <label for="senha-vend-nova">Nova Senha / PIN:</label>
+          <input type="text" id="senha-vend-nova" class="form-control" required placeholder="Digite a nova senha">
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" id="modal-senha-vend-cancelar">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="modal-senha-vend-salvar">Atualizar Senha</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ==================== MODAL: AJUSTE RÁPIDO DE ESTOQUE ==================== -->
+  <dialog id="modal-ajuste-estoque">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Ajustar Estoque Base</h3>
+        <button type="button" class="dialog-close" id="modal-ajuste-fechar">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <p id="ajuste-prod-nome" style="font-weight: 700; color: var(--cacao-dark); margin-bottom: 1rem;"></p>
+        <div class="form-group">
+          <label for="ajuste-novo-estoque">Nova Quantidade no Estoque Geral:</label>
+          <input type="number" id="ajuste-novo-estoque" class="form-control" min="0">
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" id="modal-ajuste-cancelar">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="modal-ajuste-confirmar">Atualizar Estoque</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/sheets-api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

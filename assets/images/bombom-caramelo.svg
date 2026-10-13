@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <radialGradient id="bgBonbon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDF7F0"/>
+      <stop offset="100%" stop-color="#EEDECF"/>
+    </radialGradient>
+    <linearGradient id="bonbonShell" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#5A321A"/>
+      <stop offset="50%" stop-color="#3A1C0A"/>
+      <stop offset="100%" stop-color="#1B0A03"/>
+    </linearGradient>
+    <linearGradient id="caramelDrip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EAA144"/>
+      <stop offset="60%" stop-color="#C57A25"/>
+      <stop offset="100%" stop-color="#93510F"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="url(#bgBonbon)"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="235" rx="110" ry="22" fill="rgba(42,24,16,0.22)"/>
+
+  <!-- Dome Bonbon -->
+  <g transform="translate(130, 95)">
+    <!-- Base Dome Body -->
+    <path d="M70,12 C120,12 135,50 135,100 C135,120 115,130 70,130 C25,130 5,120 5,100 C5,50 20,12 70,12 Z" fill="url(#bonbonShell)"/>
+    
+    <!-- Glossy Highlight Curve -->
+    <path d="M45,24 C80,18 100,32 110,50 C95,35 65,30 45,24 Z" fill="#FFFFFF" opacity="0.32"/>
+    <ellipse cx="40" cy="45" rx="10" ry="6" transform="rotate(-30 40 45)" fill="#FFFFFF" opacity="0.25"/>
+
+    <!-- Caramel swirl across top -->
+    <path d="M25,75 C45,60 85,62 115,78 C120,81 122,86 116,88 C85,73 45,71 22,82 C18,84 20,78 25,75 Z" fill="url(#caramelDrip)"/>
+    <path d="M40,95 C65,85 95,87 110,98 C114,101 110,105 102,103 C85,93 60,92 38,100 C34,102 36,96 40,95 Z" fill="url(#caramelDrip)"/>
+
+    <!-- Salt flakes on top -->
+    <rect x="55" y="48" width="6" height="5" rx="1.5" transform="rotate(25 55 48)" fill="#FFF9F0" stroke="#DFBA90" stroke-width="0.8"/>
+    <rect x="80" y="52" width="7" height="6" rx="1.5" transform="rotate(-15 80 52)" fill="#FFF9F0" stroke="#DFBA90" stroke-width="0.8"/>
+    <rect x="70" y="65" width="5" height="5" rx="1" transform="rotate(40 70 65)" fill="#FFF9F0" stroke="#DFBA90" stroke-width="0.8"/>
+  </g>
+</svg>
+

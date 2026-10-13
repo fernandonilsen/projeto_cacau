@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <radialGradient id="bgMaracuja" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDF7F0"/>
+      <stop offset="100%" stop-color="#EEDECF"/>
+    </radialGradient>
+    <radialGradient id="whiteChoc" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FFFDF7"/>
+      <stop offset="50%" stop-color="#F6E7D2"/>
+      <stop offset="100%" stop-color="#DBC4A5"/>
+    </radialGradient>
+    <linearGradient id="passionFruit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDD55"/>
+      <stop offset="70%" stop-color="#EAA316"/>
+      <stop offset="100%" stop-color="#BD7405"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="20" fill="url(#bgMaracuja)"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="235" rx="100" ry="20" fill="rgba(42,24,16,0.18)"/>
+
+  <!-- White Chocolate Truffle -->
+  <g transform="translate(145, 95)">
+    <path d="M55,10 C85,8 108,32 108,65 C108,98 88,118 55,118 C20,118 2,95 2,65 C2,30 25,12 55,10 Z" fill="url(#whiteChoc)" stroke="#CBB191" stroke-width="1.5"/>
+
+    <!-- Maracujá Drizzle -->
+    <path d="M25,35 Q55,50 85,25 Q100,50 75,70 Q50,60 30,85" fill="none" stroke="url(#passionFruit)" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- Passion fruit seeds -->
+    <ellipse cx="48" cy="48" rx="4" ry="2.5" fill="#2B1508" transform="rotate(25 48 48)"/>
+    <ellipse cx="78" cy="42" rx="3.5" ry="2" fill="#2B1508" transform="rotate(-30 78 42)"/>
+    <ellipse cx="62" cy="65" rx="4" ry="2.2" fill="#2B1508" transform="rotate(45 62 65)"/>
+
+    <!-- Specular highlight -->
+    <ellipse cx="38" cy="30" rx="9" ry="5" fill="#FFFFFF" opacity="0.6" transform="rotate(-20 38 30)"/>
+  </g>
+</svg>
+

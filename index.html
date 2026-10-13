@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cacau Del Show - Revenda | Chocolates Oficiais Cacau Show</title>
+  <meta name="description" content="Revenda oficial de chocolates da marca Cacau Show: Trufas, linha LaCreme, Bendito Cacao, caixas de presentes e kits especiais.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" title="Cacau Del Show - Revenda Cacau Show">
+        <img src="assets/images/logo.svg" alt="Cacau Del Show - Revenda">
+      </a>
+
+      <!-- Navegação Pública (Sem links de estoque internos) -->
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="#catalogo" class="nav-link active">Catálogo de Produtos</a>
+        <a href="#sobre" class="nav-link">Sobre a Revenda</a>
+        <a href="#contato" class="nav-link">Encomendas</a>
+      </nav>
+
+      <!-- Ações do Cabeçalho -->
+      <div class="header-actions">
+        <!-- Sacola de Pedidos do Cliente -->
+        <button id="btn-open-cart" class="btn btn-outline" style="border-radius: var(--radius-pill); padding: 0.5rem 0.95rem;">
+          🛒 <span style="display: none; @media(min-width:600px){display:inline;}">Sacola</span>
+          <span class="badge-tag" id="cart-badge-count" style="background: var(--caramel-gold); color: #fff; padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; margin-left: 0.25rem;">0</span>
+        </button>
+
+        <!-- Botão Acesso Restrito (Login) -->
+        <a href="login.html" class="btn btn-primary btn-sm" title="Acesso restrito para Administração e Vendedores" style="gap: 0.35rem;">
+          🔒 <span style="display: none; @media(min-width:768px){display:inline;}">Área Restrita</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div style="display: inline-block; background: rgba(229, 181, 106, 0.2); border: 1px solid rgba(229, 181, 106, 0.4); padding: 0.3rem 0.85rem; border-radius: 9999px; font-size: 0.82rem; font-weight: 700; color: #F5D59F; margin-bottom: 0.75rem;">
+          ⭐ REVENDA ESPECIALIZADA CACAU SHOW
+        </div>
+        <h1>Os Chocolates Cacau Show que Você Ama</h1>
+        <p class="hero-subtitle">
+          Sua revenda de confiança com os maiores sucessos da marca: Trufas clássicas, linha LaCreme ultra cremosa, Bendito Cacao e caixas de presentes para qualquer momento.
+        </p>
+
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="#catalogo" class="btn btn-secondary btn-lg">Ver Produtos</a>
+          <button type="button" id="hero-btn-cart" class="btn btn-outline btn-lg" style="color: #FFF; border-color: rgba(255,255,255,0.3);">
+            Minha Sacola
+          </button>
+        </div>
+
+        <div class="hero-badges">
+          <span class="hero-badge-item">🍫 Produtos Oficiais Cacau Show</span>
+          <span class="hero-badge-item">⚡ Pronta Entrega na Região</span>
+          <span class="hero-badge-item">🎁 Presentes & Encomendas Corporativas</span>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <div class="hero-featured-card">
+          <img src="assets/images/barra-avelas.svg" alt="Tablete LaCreme ao Leite">
+          <h3 style="color: #FFF; margin-bottom: 0.25rem;">Tablete LaCreme ao Leite</h3>
+          <p style="color: #DFC8B3; font-size: 0.85rem;">O chocolate mais cremoso da Cacau Show</p>
+          <div style="margin-top: 0.75rem; color: var(--caramel-light); font-weight: 700; font-size: 1.25rem;">R$ 16,90</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CATÁLOGO PRINCIPAL ==================== -->
+  <main class="container" id="catalogo">
+    <section class="catalog-controls">
+      <div class="search-and-stock">
+        <!-- Campo de Busca -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="input-search" placeholder="Buscar trufas, LaCreme, Bendito Cacao, presentes..." autocomplete="off">
+        </div>
+
+        <!-- Filtro Pronta Entrega -->
+        <label style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; font-weight: 600; color: var(--cacao-deep); cursor: pointer;">
+          <input type="checkbox" id="check-only-stock" style="accent-color: var(--caramel-gold); width: 18px; height: 18px;">
+          Apenas itens disponíveis para pronta entrega
+        </label>
+      </div>
+
+      <!-- Filtro de Categorias em Pills -->
+      <div class="category-pills" id="category-pills">
+        <button class="pill-btn active" data-category="todos">Todos os Produtos</button>
+        <button class="pill-btn" data-category="Trufas">Trufas 30g</button>
+        <button class="pill-btn" data-category="LaCreme">Linha LaCreme</button>
+        <button class="pill-btn" data-category="Bendito Cacao">Bendito Cacao</button>
+        <button class="pill-btn" data-category="Presentes">Caixas & Presentes</button>
+        <button class="pill-btn" data-category="Montebello">Linha Montebello</button>
+      </div>
+    </section>
+
+    <!-- Contador de Resultados -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.88rem; color: var(--text-muted);">
+      <span id="results-count">Carregando produtos...</span>
+      <span style="font-size: 0.82rem; color: var(--caramel-gold); font-weight: 600;">Revenda Cacau Del Show</span>
+    </div>
+
+    <!-- Grade Dinâmica de Produtos Públicos -->
+    <div class="product-grid" id="product-grid">
+      <!-- Inserido dinamicamente via JS -->
+    </div>
+  </main>
+
+  <!-- ==================== SESSÃO SOBRE A REVENDA ==================== -->
+  <section class="container" id="sobre" style="padding: 3rem 1.25rem; border-top: 1px solid var(--border-light);">
+    <div style="background: var(--surface-card); border-radius: var(--radius-lg); padding: 2.5rem; border: 1px solid var(--border-light); display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: center;">
+      <div>
+        <h2 style="color: var(--cacao-dark); margin-bottom: 0.75rem;">Sobre a Cacau Del Show - Revenda</h2>
+        <p style="margin-bottom: 1rem; line-height: 1.6;">
+          A <strong>Cacau Del Show</strong> é a sua revenda especializada dos chocolates mais admirados do Brasil. Levamos a você todo o catálogo da marca <strong>Cacau Show</strong> com praticidade, frescor garantido e atendimento atencioso.
+        </p>
+        <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+          Trabalhamos com pronta entrega para pessoas físicas, além de encomendas personalizadas para datas comemorativas (Páscoa, Natal, Dia das Mães, Dia dos Namorados) e eventos corporativos.
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="#catalogo" class="btn btn-primary">Fazer Pedido</a>
+          <a href="https://wa.me/?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20revenda%20Cacau%20Del%20Show!" target="_blank" class="btn btn-outline">Falar no WhatsApp</a>
+        </div>
+      </div>
+      <div style="text-align: center; background: var(--surface-muted); padding: 1.5rem; border-radius: var(--radius-md);">
+        <img src="assets/images/caixa-presente.svg" alt="Presentes Cacau Show" style="max-height: 180px; margin: 0 auto 1rem;">
+        <h4 style="color: var(--cacao-dark); margin-bottom: 0.25rem;">Presenteie com Cacau Show</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Montamos kits especiais sob encomenda</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODAL DE DETALHES DO PRODUTO ==================== -->
+  <dialog id="modal-product-detail">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 id="modal-detail-title">Detalhes do Produto</h3>
+        <button type="button" class="dialog-close" id="modal-detail-close">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <img id="modal-detail-img" src="" alt="Produto Cacau Show" style="max-height: 200px; margin: 0 auto; border-radius: var(--radius-md);">
+        </div>
+        <p id="modal-detail-desc" style="font-size: 0.95rem; margin-bottom: 1.25rem;"></p>
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; background: var(--surface-muted); padding: 0.85rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+          <span style="font-weight: 600; color: var(--text-secondary);">Disponibilidade:</span>
+          <span id="modal-detail-stock" style="font-weight: 700;">Pronta Entrega</span>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 1.5rem; font-weight: 700; color: var(--cacao-dark);" id="modal-detail-price">R$ 0,00</div>
+          
+          <div class="quantity-picker">
+            <button type="button" class="qty-btn" id="modal-detail-minus">-</button>
+            <input type="text" class="qty-input" id="modal-detail-qty" value="1" readonly>
+            <button type="button" class="qty-btn" id="modal-detail-plus">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" id="modal-detail-cancel">Voltar</button>
+        <button type="button" class="btn btn-primary" id="modal-detail-add">Adicionar à Sacola</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ==================== SACOLA DE COMPRAS LATERAL ==================== -->
+  <div class="cart-backdrop" id="cart-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3 style="color: #FFF; font-size: 1.15rem;">Sua Sacola de Chocolates</h3>
+      <button type="button" id="cart-close-btn" style="background: none; border: none; color: #FFF; font-size: 1.4rem; cursor: pointer;">&times;</button>
+    </div>
+
+    <div class="cart-items-list" id="cart-items-container">
+      <!-- Inserido dinamicamente via JS -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total Estimado:</span>
+        <span id="cart-total-amount">R$ 0,00</span>
+      </div>
+
+      <button type="button" id="btn-whatsapp-order" class="btn btn-success" style="width: 100%; margin-bottom: 0.5rem; gap: 0.6rem;">
+        <span>💬 Enviar Pedido via WhatsApp</span>
+      </button>
+
+      <button type="button" id="btn-clear-cart" class="btn btn-outline btn-sm" style="width: 100%;">
+        Limpar Sacola
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== BARRA MOBILE FIXA ==================== -->
+  <nav class="mobile-bottom-bar" aria-label="Navegação Mobile">
+    <div class="mobile-bottom-inner">
+      <a href="index.html" class="mobile-nav-btn active">
+        <span>🍫</span>
+        <span>Catálogo</span>
+      </a>
+      <button type="button" class="mobile-nav-btn" id="mobile-btn-cart">
+        <span>🛒</span>
+        <span>Sacola (<span id="mobile-cart-count">0</span>)</span>
+      </button>
+      <a href="https://wa.me/?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido%20na%20Cacau%20Del%20Show%20Revenda!" target="_blank" class="mobile-nav-btn">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+      <a href="login.html" class="mobile-nav-btn">
+        <span>🔒</span>
+        <span>Área Restrita</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ==================== RODAPÉ ==================== -->
+  <footer class="site-footer" id="contato">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 style="color: #FFF;">Cacau Del Show - Revenda</h3>
+          <p>
+            Revenda de produtos originais da marca Cacau Show. Qualidade, sabor e excelência para tornar o seu dia e o de quem você ama mais doce.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Produtos Mais Pedidos</h4>
+          <ul class="footer-links">
+            <li><a href="#catalogo">Trufas Tradicionais 30g</a></li>
+            <li><a href="#catalogo">Linha LaCreme Ultra Cremosa</a></li>
+            <li><a href="#catalogo">Bendito Cacao 70% e 85%</a></li>
+            <li><a href="#catalogo">Caixas de Bombons Clássicos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Equipe & Gestão</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">🔒 Acesso Restrito (Login)</a></li>
+            <li><a href="login.html">Painel do Vendedor</a></li>
+            <li><a href="login.html">Controle de Estoque (Admin)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cacau Del Show - Revenda Cacau Show. Todos os direitos reservados. Todas as marcas e produtos pertencem aos seus respectivos titulares.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sheets-api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
